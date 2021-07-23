@@ -9,8 +9,7 @@ import static com.jean.ActivationFunctions.stepFunction;
 
 public class Perceptron {
     float wFa, wVa, wCa, wRs, wC, wFs, wTs, wD, wPh, wS, wA;
-    final float n = 0.0000005f;
-    final int totalIteration = 10000;
+    final float learnRate = 0.0000005f;
     ArrayList<WineSample> samples;
     Random r;
     double errorRate = 0;
@@ -60,7 +59,7 @@ public class Perceptron {
                         curSample.residualSugar * wRs + curSample.chlorides * wC + curSample.freeSulfurDioxide * wFs +
                         curSample.totalSulfurDioxide * wTs + curSample.density * wD + curSample.pH * wPh +
                         curSample.sulphates * wS + curSample.alcohol * wA;
-                float c = n * (curSample.quality - stepFunction(totalSum));
+                float c = learnRate * (curSample.quality - stepFunction(totalSum));
                 wFa = wFa + c * curSample.fixedAcidity;
                 wVa = wVa + c * curSample.volatileAcidity;
                 wCa = wCa + c * curSample.citricAcid;
