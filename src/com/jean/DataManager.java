@@ -1,15 +1,20 @@
 package com.jean;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import static com.jean.ActivationFunctions.stepFunction;
 
 public class DataManager {
     private ArrayList<WineSample> samples;
     public DataManager() {
         samples = new ArrayList<>();
     }
-    public void readData() {
-        File file = new File("C:\\Users\\Jean\\Desktop\\java_projects\\Perceptron\\Perceptron\\src\\winequality\\winequality\\winequality-white.csv");
+    public void readData() throws URISyntaxException {
+        URL resource = getClass().getClassLoader().getResource("winequality-white.csv");
+        File file = new File(resource.toURI());
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
@@ -30,7 +35,7 @@ public class DataManager {
                     curSample.pH = Float.parseFloat(properties[8]);
                     curSample.sulphates = Float.parseFloat(properties[9]);
                     curSample.alcohol = Float.parseFloat(properties[10]);
-                    curSample.quality = Float.parseFloat(properties[11]);
+                    curSample.quality = stepFunction(Float.parseFloat(properties[11]));
                     samples.add(curSample);
                 }
             }
